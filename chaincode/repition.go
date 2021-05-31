@@ -3,6 +3,7 @@ package chaincode
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
 
@@ -13,20 +14,20 @@ type SmartContract struct {
 
 // Data describes basic details of what makes up a simple repition data
 type Data struct {
-	id               string  `json:"id"`
-	task_id          int     `json:"task_id"`
-	company_code     int     `json:"company_code"`
-	letter_num       string  `json:"letter_num"`
-	predict_value    string  `json:"predict_value"`
-	predict_divation string  `json:"predict_divation"`
-	f_value          string  `json:"f_value"`
+	ID              string `json:"id"`
+	TaskId          int    `json:"task_id"`
+	CompanyCode     int    `json:"company_code"`
+	LetterNum       string `json:"letter_num"`
+	PredictValue    string `json:"predict_value"`
+	PredictDivation string `json:"predict_divation"`
+	Fvalue          string `json:"f_value"`
 }
 
 // InitLedger adds a base set of datas to the ledger
 func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 	datas := []Data{
-		{id: "1", task_id: 122, company_code: 2, letter_num: "ln1", predict_value: "pv1", predict_divation: "pd1", f_value: "fv1"},
-		{id: "2", task_id: 122, company_code: 3, letter_num: "ln2", predict_value: "pv2", predict_divation: "pd2", f_value: "fv2"},
+		{ID: "1", TaskId: 122, CompanyCode: 2, LetterNum: "ln1", PredictValue: "pv1", PredictDivation: "pd1", Fvalue: "fv1"},
+		{ID: "2", TaskId: 122, CompanyCode: 3, LetterNum: "ln2", PredictValue: "pv2", PredictDivation: "pd2", Fvalue: "fv2"},
 	}
 
 	for _, data := range datas {
@@ -35,7 +36,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) 
 			return err
 		}
 
-		err = ctx.GetStub().PutState(data.id, dataJSON)
+		err = ctx.GetStub().PutState(data.ID, dataJSON)
 		if err != nil {
 			return fmt.Errorf("failed to put to world state. %v", err)
 		}
@@ -55,13 +56,13 @@ func (s *SmartContract) CreateData(ctx contractapi.TransactionContextInterface, 
 	}
 
 	data := Data{
-		id:               id,
-		task_id:          task_id,
-		company_code:     company_code,
-		letter_num:       letter_num,
-		predict_value:    predict_value,
-		predict_divation: predict_divation,
-		f_value:          f_value,
+		ID:              id,
+		TaskId:          task_id,
+		CompanyCode:     company_code,
+		LetterNum:       letter_num,
+		PredictValue:    predict_value,
+		PredictDivation: predict_divation,
+		Fvalue:          f_value,
 	}
 	dataJSON, err := json.Marshal(data)
 	if err != nil {
@@ -102,13 +103,13 @@ func (s *SmartContract) UpdateData(ctx contractapi.TransactionContextInterface, 
 
 	// overwriting original data with new data
 	data := Data{
-		id:               id,
-		task_id:          task_id,
-		company_code:     company_code,
-		letter_num:       letter_num,
-		predict_value:    predict_value,
-		predict_divation: predict_divation,
-		f_value:          f_value,
+		ID:              id,
+		TaskId:          task_id,
+		CompanyCode:     company_code,
+		LetterNum:       letter_num,
+		PredictValue:    predict_value,
+		PredictDivation: predict_divation,
+		Fvalue:          f_value,
 	}
 	dataJSON, err := json.Marshal(data)
 	if err != nil {
